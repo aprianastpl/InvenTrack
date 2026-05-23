@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Items\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\BulkActionGroup;
 
 class ItemsTable
 {
@@ -14,31 +17,35 @@ class ItemsTable
     {
         return $table
             ->columns([
+
+                ImageColumn::make('image')
+                    ->disk('public')
+                    ->label('Gambar'),
+
                 TextColumn::make('nama_barang')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('kode_barang')
                     ->searchable(),
+
                 TextColumn::make('stok')
-                    ->numeric()
-                    ->sortable(),
+                    ->badge(),
+
                 TextColumn::make('harga')
-                    ->numeric()
-                    ->sortable(),
+                    ->money('IDR'),
+
                 TextColumn::make('kondisi')
-                    ->searchable(),
-                TextColumn::make('lokasi')
-                    ->searchable(),
-                TextColumn::make('users_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->badge(),
+
+                TextColumn::make('lokasi'),
+
+                TextColumn::make('user.name')
+                    ->label('User'),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->dateTime('d M Y'),
+
             ])
             ->filters([
                 //

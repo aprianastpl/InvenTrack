@@ -2,25 +2,32 @@
 
 namespace App\Filament\Resources\Items;
 
-use App\Filament\Resources\Items\Pages\CreateItem;
-use App\Filament\Resources\Items\Pages\EditItem;
-use App\Filament\Resources\Items\Pages\ListItems;
-use App\Filament\Resources\Items\Schemas\ItemForm;
-use App\Filament\Resources\Items\Tables\ItemsTable;
 use App\Models\Item;
-use BackedEnum;
+
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+
+use App\Filament\Resources\Items\Schemas\ItemForm;
+use App\Filament\Resources\Items\Tables\ItemsTable;
+
+use App\Filament\Resources\Items\Pages\ListItems;
+use App\Filament\Resources\Items\Pages\CreateItem;
+use App\Filament\Resources\Items\Pages\EditItem;
 
 class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
-    protected static ?string $recordTitleAttribute = 'Item';
+    protected static ?string $navigationLabel = 'Barang';
+
+    protected static ?string $modelLabel = 'Barang';
+
+    protected static ?string $pluralModelLabel = 'Barang';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Manajemen Inventaris';
 
     public static function form(Schema $schema): Schema
     {
@@ -34,9 +41,7 @@ class ItemResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

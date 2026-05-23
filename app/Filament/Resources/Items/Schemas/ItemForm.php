@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Items\Schemas;
 
+use Filament\Schemas\Schema;
+
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 
 class ItemForm
 {
@@ -12,29 +15,48 @@ class ItemForm
     {
         return $schema
             ->components([
+
                 TextInput::make('nama_barang')
                     ->required(),
+
                 TextInput::make('kode_barang')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
+
                 TextInput::make('stok')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('harga')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('kondisi')
+                    ->numeric()
                     ->required(),
+
+                TextInput::make('harga')
+                    ->numeric()
+                    ->prefix('Rp')
+                    ->required(),
+
+                Select::make('kondisi')
+                    ->options([
+                        'Baik' => 'Baik',
+                        'Rusak Ringan' => 'Rusak Ringan',
+                        'Rusak Berat' => 'Rusak Berat',
+                    ])
+                    ->required(),
+
                 TextInput::make('lokasi')
                     ->required(),
+
+                FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('barang'),
+
                 Textarea::make('deskripsi')
-                    ->required()
-                    ->columnSpanFull(),
-                Textarea::make('image')
-                    ->required()
-                    ->columnSpanFull(),
-                TextInput::make('users_id')
-                    ->required()
-                    ->numeric(),
+                    ->rows(4),
+
+                Select::make('users_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
             ]);
     }
 }

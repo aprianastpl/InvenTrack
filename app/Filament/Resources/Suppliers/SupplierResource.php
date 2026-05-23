@@ -2,25 +2,32 @@
 
 namespace App\Filament\Resources\Suppliers;
 
-use App\Filament\Resources\Suppliers\Pages\CreateSupplier;
-use App\Filament\Resources\Suppliers\Pages\EditSupplier;
-use App\Filament\Resources\Suppliers\Pages\ListSuppliers;
-use App\Filament\Resources\Suppliers\Schemas\SupplierForm;
-use App\Filament\Resources\Suppliers\Tables\SuppliersTable;
 use App\Models\Supplier;
-use BackedEnum;
+
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+
+use App\Filament\Resources\Suppliers\Schemas\SupplierForm;
+use App\Filament\Resources\Suppliers\Tables\SuppliersTable;
+
+use App\Filament\Resources\Suppliers\Pages\ListSuppliers;
+use App\Filament\Resources\Suppliers\Pages\CreateSupplier;
+use App\Filament\Resources\Suppliers\Pages\EditSupplier;
 
 class SupplierResource extends Resource
 {
     protected static ?string $model = Supplier::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
-    protected static ?string $recordTitleAttribute = 'Supllier';
+    protected static ?string $navigationLabel = 'Supplier';
+
+    protected static ?string $modelLabel = 'Supplier';
+
+    protected static ?string $pluralModelLabel = 'Supplier';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Manajemen Inventaris';
 
     public static function form(Schema $schema): Schema
     {
@@ -34,9 +41,7 @@ class SupplierResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

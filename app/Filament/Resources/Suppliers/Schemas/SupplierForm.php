@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Suppliers\Schemas;
 
+use Filament\Schemas\Schema;
+
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\FileUpload;
 
 class SupplierForm
 {
@@ -12,23 +14,30 @@ class SupplierForm
     {
         return $schema
             ->components([
+
                 TextInput::make('nama_perusahaan')
                     ->required(),
+
                 TextInput::make('nama_kontak')
                     ->required(),
+
                 TextInput::make('telepon')
                     ->tel()
                     ->required(),
+
                 TextInput::make('email')
-                    ->label('Email address')
                     ->email()
                     ->required(),
+
                 Textarea::make('alamat')
-                    ->required()
-                    ->columnSpanFull(),
-                Textarea::make('image')
-                    ->required()
-                    ->columnSpanFull(),
+                    ->rows(4)
+                    ->required(),
+
+                FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('supplier'),
+
             ]);
     }
 }
